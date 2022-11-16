@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Uper.UserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Uper"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+        <ListBoxItem Margin="3">
+        <StackPanel Orientation="Horizontal" Background="AliceBlue">
+            <Border
+                                    CornerRadius="5"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Black"
+                                BorderThickness="2">
+                <StackPanel Margin="10" Orientation="Vertical" Width="250">
+
+                    <TextBlock x:Name="NameServiseLable">Наименование</TextBlock>
+                    <TextBlock x:Name="TimeLable">Время</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Количество файлов: </TextBlock>
+                        <TextBlock x:Name="CountLable" Margin="10,0">0</TextBlock>
+                    </StackPanel>
+
+
+
+                </StackPanel>
+            </Border>
+            <Border    CornerRadius="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Black"
+                                BorderThickness="2">
+            <StackPanel >
+                <Button HorizontalAlignment="Center" Height="70">Подробней</Button>
+            </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </ListBoxItem>
+   
+</UserControl>

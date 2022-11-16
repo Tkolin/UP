@@ -1,0 +1,179 @@
+﻿<Window x:Class="Uper.ServisWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Uper"
+        mc:Ignorable="d"
+                Title="Салон красоты Мордочка" Height="600" Width="840" Loaded="Window_Loaded"
+        MinHeight="600" MaxHeight="600" MinWidth="840" MaxWidth="840" Icon="/beauty_logo.ico"
+        >
+    
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Tahoma" />
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Black"
+                                BorderThickness="2">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter  Property="Background" Value="#ff4a6d" />
+                                <Setter  Property="BorderBrush" Value="#ff4a6d" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ff4a6d"/>
+                                <Setter Property="Background" Value="#ff4a6d"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Top" Background="#e1e4ff" >
+                <DockPanel LastChildFill="True" Margin="5" >
+
+                    <Image DockPanel.Dock="Left" Source="/beauty_logo.png" Stretch="Fill" Width="70" Height="70">
+                        <Image.Effect>
+                            <DropShadowEffect/>
+                        </Image.Effect>
+                    </Image>
+                    <Grid DockPanel.Dock="Left" >
+                        <StackPanel >
+                            <TextBlock  Text="Салон красоты Мордочка " FontSize="30" Margin="10,0,0,0"/>
+                            <TextBlock  Text="Информация о пользователе" FontSize="20" Margin="10,0,0,0"/>
+                        </StackPanel>
+
+                    </Grid>
+                    <TextBlock VerticalAlignment="Center" DockPanel.Dock="Right" Text="дд.мм.гггг чч:мм"  x:Name="DataTimerLable"/>
+                    <Grid DockPanel.Dock="Right"/>
+                </DockPanel>
+            </Grid>
+
+
+
+
+            <StackPanel Margin="20">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <Grid Width="100" Height="100">
+                            <Grid.Effect>
+                                <DropShadowEffect/>
+                            </Grid.Effect>
+                            <Image                             Width="100"                            Height="100"                            Source="/error.jpg"                                            Stretch="Fill"/>
+                            <Image                             Width="100"                            Height="100"                        x:Name="imgLable"                             Source="/error.jpg"        Stretch="Fill"/>
+
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="10,10,0,0">ID:</TextBlock>
+                            <TextBlock x:Name="IdLable" Margin="10,10,0,0"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <TextBlock  Margin="0,5,0,0" x:Name="FIOLable">Фамилия имя отчество</TextBlock>
+                        <TextBlock Margin="0,5,0,0" x:Name="BirthDateLable">Дата рождения</TextBlock>
+                        <TextBlock Margin="0,5,0,0" x:Name="GenderLable">Пол</TextBlock>
+                    </StackPanel>
+                    <Grid Margin="10">
+                        <TextBox Width="400" IsEnabled="False">Теги</TextBox>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                <Grid Margin="10" Height="240">
+                    <ListBox x:Name="da"
+                            
+                             ItemsSource="{Binding Phones}"
+                       
+                             d:ItemsSource="{d:SampleData ItemCount=1}" FontFamily="Template">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    CornerRadius="5"                     
+                                BorderBrush="Black"
+                                BorderThickness="2">
+                                <StackPanel Margin="5" Width="450">
+                                    <TextBlock FontSize="18" Text="{Binding Title}" />
+                                            <TextBlock Text="{Binding StartTime}" />
+                                            <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Cost}" />
+                                                <TextBlock Margin="10,0,0,0" Text=" руб."/>
+                                            </StackPanel>
+                                            <ComboBox Margin="10" SelectedIndex="0" FontFamily="Template">
+                                                <ComboBoxItem IsEnabled="False">
+                                                    <TextBlock>Описание: </TextBlock>
+                                                </ComboBoxItem>
+                                                <ComboBoxItem IsEnabled="False">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Title}"/>
+                                                            <Image/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Цена:"/>
+                                                            <TextBlock Text="{Binding Cost}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Скидка: "/>
+                                                            <TextBlock Text="{Binding Discount}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Время начала: "/>
+                                                            <TextBlock Text="{Binding StartTime}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Продолжительность (секунды): "/>
+                                                            <TextBlock Text="{Binding DurationInSeconds}"/>
+                                                        </StackPanel>
+                                                        <TextBlock Text ="Описание:"/>
+                                                        <TextBlock Text ="{Binding Descripton}"/>
+                                                        
+                                                    </StackPanel>
+
+
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        
+                                    </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+                    <Grid/>
+                </StackPanel>
+
+                <Grid DockPanel.Dock="Bottom" Height="24">
+
+                    <Button Width="150" HorizontalAlignment="Left"
+            x:Name="Remove"
+            Click="Remove_Click">Отмена</Button>
+                    <Button Visibility="Hidden" Width="150" HorizontalAlignment="Right"
+            x:Name="Save"
+            Click="Save_Click">Сохранить</Button>
+                </Grid>
+
+            </StackPanel>
+           
+        </DockPanel>
+    </Grid>
+</Window>

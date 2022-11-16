@@ -1,0 +1,183 @@
+﻿<Window x:Class="Uper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Uper"
+        mc:Ignorable="d"
+        Title="Салон красоты Мордочка" Height="600" Width="840" Loaded="Window_Loaded"
+        MinHeight="600" MaxHeight="600" MinWidth="840" MaxWidth="840" Icon="/beauty_logo.ico"
+        >
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Tahoma" />
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Black"
+                                BorderThickness="2">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter  Property="Background" Value="#ff4a6d" />
+                                <Setter  Property="BorderBrush" Value="#ff4a6d" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ff4a6d"/>
+                                <Setter Property="Background" Value="#ff4a6d"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid  >
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Top" Background="#e1e4ff" >
+                <DockPanel LastChildFill="True" Margin="5" >
+                    
+                    <Image DockPanel.Dock="Left" Source="/beauty_logo.png" Stretch="Fill" Width="70" Height="70">
+                        <Image.Effect>
+                            <DropShadowEffect/>
+                        </Image.Effect>
+                    </Image>
+                    <Grid DockPanel.Dock="Left" >
+                        <StackPanel >
+                            <TextBlock  Text="Салон красоты Мордочка " FontSize="30" Margin="10,0,0,0"/>
+                            <TextBlock  Text="Список клиентов" FontSize="20" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        
+
+                    </Grid>
+                    <TextBlock VerticalAlignment="Center" x:Name="DateTimeLable" DockPanel.Dock="Right" Text="дд.мм.гггг чч:мм"  />
+                    <Grid DockPanel.Dock="Right"/>
+
+                </DockPanel>
+
+            </Grid>
+            <Grid >
+                <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBox Width="300" TextChanged="TextBox_TextChanged" x:Name="TextBox"/>
+                            <Button x:Name="ResetBtn" Click="ResetSearch_Click" Width="100" Margin="5,0,0,0" >Сбросить</Button>
+                            <ComboBox x:Name="GenderFilter"                             
+                                      SelectionChanged="GenderFilter_SelectionChanged"  Margin="5,0,0,0" Width="150" SelectedIndex="0">
+                                <ComboBoxItem IsEnabled="False"> Выбрать пол:</ComboBoxItem>
+                                <ComboBoxItem>нет</ComboBoxItem>
+                                <ComboBoxItem>Мужской</ComboBoxItem>
+                                <ComboBoxItem>Женский</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <DataGrid Height="390" Width="560" 
+                                  AutoGenerateColumns="False" 
+                                  x:Name="clientGrid"
+                                  SelectionMode="Single"
+                                  ItemsSource="{Binding clientTable}" 
+                                  IsReadOnly="True"
+                                  MouseDoubleClick="clientGrid_MouseDoubleClick">
+                            <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ID}" Header="ID" Width="10"/>
+                            <DataGridTextColumn Binding="{Binding GenderCode}" Header="Пол" Width="70"/>
+                            <DataGridTextColumn Binding="{Binding FirstName}"  
+                                                x:Name="firstCollum" Header="Имя" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Birthday}"
+                                                x:Name="dateCollum" HeaderStringFormat="dd.mm.yyyy" Header="Дата рождения" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Phone}" Header="Номер телефона" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Email}" Header="Email" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding PhotoPath}" Header="Изображение" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding RegistrationDate}" Header="Дата добавления" Width="120"/>
+                            <DataGridTextColumn Header="Дата последнего посещения" 
+                                                x:Name="regisCollum" Width="120"/>
+                            <DataGridTextColumn Header="Список тегов" Width="120"/>
+                        </DataGrid.Columns>
+
+
+                        </DataGrid>
+
+                            <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+
+                            <ScrollBar Orientation="Horizontal" Width="300"></ScrollBar>
+                            <Button Margin="5,0,0,0" Width="30">10</Button>
+                            <Button Margin="5,0,0,0" Width="30">50</Button>
+                            <Button Margin="5,0,0,0" Width="30">200</Button>
+                            <Button Margin="5,0,0,0" Width="30">всё</Button>
+                            <TextBlock x:Name="GridCount" Margin="60,2,0,0">100/200</TextBlock>
+                        </StackPanel>
+
+                </StackPanel>
+                    <DockPanel Margin="10">
+                <StackPanel DockPanel.Dock="Top">
+
+                            <ComboBox x:Name="filterFirstName" SelectionChanged="filterFirstName_SelectionChanged"  Width="200" Margin="0,0,0,15" SelectedIndex="0">
+                                <ComboBoxItem IsEnabled="False">Сортировать по имени</ComboBoxItem>
+                                <ComboBoxItem>не сортировать</ComboBoxItem>
+                                <ComboBoxItem>от А до Я</ComboBoxItem>
+                                <ComboBoxItem>от Я до А</ComboBoxItem>
+
+                            </ComboBox>
+                            <ComboBox x:Name="filterBirtsd" SelectionChanged="filterBirtsd_SelectionChanged"  Width="200" Margin="0,0,0,15" SelectedIndex="0">
+                                <ComboBoxItem IsEnabled="False">Сортировать по дате рождения</ComboBoxItem>
+                                <ComboBoxItem>не сортировать</ComboBoxItem>
+                                <ComboBoxItem>по Возростанию</ComboBoxItem>
+                                <ComboBoxItem>по Убыванию</ComboBoxItem>
+                            </ComboBox>
+                            <ComboBox x:Name="filterDateInp" SelectionChanged ="filterDateInp_SelectionChanged"  Width="200" Margin="0,0,0,15" SelectedIndex="0">
+                                <ComboBoxItem IsEnabled="False">Сортировать по посещяемости</ComboBoxItem>
+                                <ComboBoxItem>не сортировать</ComboBoxItem>
+                                <ComboBoxItem>по Возростанию</ComboBoxItem>
+                                <ComboBoxItem>по Убыванию</ComboBoxItem>
+                            </ComboBox>
+                        <Button Width="100"> Сбросить</Button>
+
+                    </StackPanel>
+
+                       
+                        <StackPanel DockPanel.Dock="Bottom" >
+                            <Button x:Name="DelBtn" Click="DelBtn_Click" Width="200" Margin="0,0,0,10">Удалить пользователя</Button>
+                            <Button 
+                                Width="200" 
+                                Margin="0,0,0,10"
+                                x:Name="BtnUpdateClient"
+                                Click="BtnUpdateClient_Click">Редактировать пользователя</Button>
+                            <Button
+                                Width="200" 
+                                Margin="0,0,0,10"
+                                x:Name="BtnAddClient"
+                                Click="BtnAddClient_Click"
+                                >Добавить нового пользователя</Button>
+
+                        </StackPanel>
+                        <StackPanel Margin="10" Background="#e1e4ff" DockPanel.Dock="Bottom">
+
+                            <ListBox x:Name="logs" Height="200" ></ListBox>
+
+
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+
+            </Grid>
+
+        </DockPanel>
+    </Grid>
+</Window>
